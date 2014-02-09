@@ -9,13 +9,14 @@
    var before = 0;
    var type = "";
    var points = 0;
-   document.getElementById("pts").value = 0;	
+   var gained = [5,5,5,5,5,5,5,5,5];
+   document.getElementById("pts").value = 0;
    
    function updateDisplay(){
    document.getElementById("input").value = "";
     switch(currentLocale){
     case -1: 
-     msg = "You have reached the edge of the map.";	
+     msg = "You have reached the edge of the map.";		
 	 currentLocale = before;
     break;
     case 0: 
@@ -28,23 +29,23 @@
     break;
     case 2: 
      msg = "Student Center";
-     msg2 = "You step into the main building on campus.  Hmm where am ?";
+     msg2 = "You step into the main building on campus.  Hmmm what campus is this?";
     break;
     case 3: 
      msg = "River";
-     msg2 = "You have arrived at the largest freshman dorm.";
+     msg2 = "You step into a large River.  It looks like the Hudson.. but the only way out is near Champagnat.";
     break;
     case 4: 
      msg = "Football Field";
-     msg2 = "You have arrived at the largest freshman dorm.";
+     msg2 = "The sign says 'Tenney Stadium'";
     break;
     case 5: 
      msg = "McCann Center";
-     msg2 = "You have arrived at the largest freshman dorm.";
+     msg2 = "You have arrived at the building for swimming, basketball, and workouts..";
     break;
     case 6: 
      msg = "Donnelly";
-     msg2 = "You have arrived at the largest freshman dorm.";
+     msg2 = "What is this? A building with both science and fashion? Odd...";
     break;
     case 7: 
      msg = "Highway";
@@ -67,8 +68,10 @@
    function go(dir) {
     directions(dir);
    }
+   
    function directions(dir){
-	points=points+5;
+	points=points+gained[currentLocale];
+	gained[currentLocale]=0;
     document.getElementById("pts").value = points;
 	
    var nav = 
