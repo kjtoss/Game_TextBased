@@ -8,6 +8,8 @@
    var msg2 = "";
    var before = 0;
    var type = "";
+   var points = 0;
+   document.getElementById("pts").value = 0;	
    
    function updateDisplay(){
    document.getElementById("input").value = "";
@@ -46,7 +48,11 @@
     break;
     case 7: 
      msg = "Highway";
-     msg2 = "You have found yourself mistakenly walking onto a highway, where a mysterious train materialized right in front of you. Quick, go back or continue?";
+     msg2 = "You have found yourself mistakenly walking onto a highway, where a mysterious train materialized right in front of you. You must go back or die.";
+    break;
+    case 8: 
+     msg = "Hell";
+     msg2 = "The train runs over you, crushing ever bone in your body. The end.";
     break;
     default:
      msg = "currentLocale matches no cases";
@@ -62,6 +68,9 @@
     directions(dir);
    }
    function directions(dir){
+	points=points+5;
+    document.getElementById("pts").value = points;
+	
    var nav = 
 			[				
 	/*0-Champ*/		[2,  1, 4, 3],
@@ -71,7 +80,8 @@
 	/*4-FB*/		[6,  5, 7, 0],
 	/*5-McCann*/	[4,  -1, 7, 1],
 	/*6-Donnelly*/	[-1,  4, 7, 2],
-	/*7-Highway*/	[-1,  4, -1, 2]
+	/*7-Highway*/	[-1,  -1, 8, 2],
+	/*8-Hell*/		[-1,  -1, -1, -1]
 			];
 	before = currentLocale;
     switch(dir){
@@ -91,16 +101,24 @@
 		alert("Internal Error: unknown direction: " + dir + ".");
 	 break;
    }
-   /*var dirArray = ["North","South","East","West"];
-	for(int i=0, i<4, i++){
-		if(nav[currentLocale][i]==-1)
-			dirArray[i].disabled = true;
-	}*/
-	if(nav[currentLocale][0]==-1){
-		document.getElementById("North").disabled = true;
-		}else{
-		document.getElementById("North").disabled = false;
-	}
+		if(nav[currentLocale][0]==-1)
+			document.getElementById("d0").disabled = true;
+		else
+			document.getElementById("d0").disabled = false;
+		if(nav[currentLocale][1]==-1)
+			document.getElementById("d1").disabled = true;
+		else
+			document.getElementById("d1").disabled = false;
+		if(nav[currentLocale][2]==-1)
+			document.getElementById("d2").disabled = true;
+		else
+			document.getElementById("d2").disabled = false;
+		if(nav[currentLocale][3]==-1)
+			document.getElementById("d3").disabled = true;
+		else
+			document.getElementById("d3").disabled = false;
+			
+	
 	updateDisplay();
    }
    function con(){
@@ -145,6 +163,7 @@
  </head>
  <body onload="updateDisplay();">
   <h2>The Lost Adventurer</h2>
+  <h3>You woke up this morning to find yourself in a land you have never been before.  Where would you like to travel? Remember, the more you travel, the more experience you get!</h3>
   <textarea id="loc" style="width:400px; height:200px;">
   </textarea>
   <textarea id="details" style="width:400px; height:50px;">
@@ -158,15 +177,23 @@
   <br>
   <input  type = "button"
     value = "North"
+	id = "d0"
     onClick = "go('north');">
   <input  type = "button"
     value = "South"
+	id = "d1"
     onClick = "go('south');">
   <input  type = "button"
     value = "East"
+	id = "d2"
     onClick = "go('east');">
   <input  type = "button"
     value = "West"
+	id = "d3"
     onClick = "go('west');">
+  <br>
+  <label>Experience:</label>
+  <textarea id="pts" style="width:16px; height:16px;">
+  </textarea>
  </body>
 </html>
