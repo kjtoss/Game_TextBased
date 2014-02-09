@@ -1,0 +1,172 @@
+<!doctype HTML>
+<html>
+ <head>
+  <title>The Lost Adventurer</title>
+  <script>
+   var currentLocale = 0;
+   var msg = "";
+   var msg2 = "";
+   var before = 0;
+   var type = "";
+   
+   function updateDisplay(){
+   document.getElementById("input").value = "";
+    switch(currentLocale){
+    case -1: 
+     msg = "You have reached the edge of the map.";	
+	 currentLocale = before;
+    break;
+    case 0: 
+     msg = "Champagnat";	
+     msg2 = "You have arrived at the largest freshman dorm.";
+    break;
+    case 1: 
+     msg = "Leo";
+     msg2 = "You have arrived at the second largest freshman dorm.";
+    break;
+    case 2: 
+     msg = "Student Center";
+     msg2 = "You step into the main building on campus.  Hmm where am ?";
+    break;
+    case 3: 
+     msg = "River";
+     msg2 = "You have arrived at the largest freshman dorm.";
+    break;
+    case 4: 
+     msg = "Football Field";
+     msg2 = "You have arrived at the largest freshman dorm.";
+    break;
+    case 5: 
+     msg = "McCann Center";
+     msg2 = "You have arrived at the largest freshman dorm.";
+    break;
+    case 6: 
+     msg = "Donnelly";
+     msg2 = "You have arrived at the largest freshman dorm.";
+    break;
+    case 7: 
+     msg = "Highway";
+     msg2 = "You have found yourself mistakenly walking onto a highway, where a mysterious train materialized right in front of you. Quick, go back or continue?";
+    break;
+    default:
+     msg = "currentLocale matches no cases";
+    }
+    var iPtr = document.getElementById("loc");
+    var history = iPtr.value;
+    iPtr.value = msg + "\n" + history; 
+	var iDet = document.getElementById("details");
+	iDet.value = msg2;
+   }
+
+   function go(dir) {
+    directions(dir);
+   }
+   function directions(dir){
+   var nav = 
+			[				
+	/*0-Champ*/		[2,  1, 4, 3],
+	/*1-Leo*/		[0, -1, 5, -1],
+	/*2-SC*/		[-1,  0, 6, -1],
+	/*3-River*/		[3,  3, 0, -1],
+	/*4-FB*/		[6,  5, 7, 0],
+	/*5-McCann*/	[4,  -1, 7, 1],
+	/*6-Donnelly*/	[-1,  4, 7, 2],
+	/*7-Highway*/	[-1,  4, -1, 2]
+			];
+	before = currentLocale;
+    switch(dir){
+     case('north'):
+		currentLocale = nav[currentLocale][0];
+     break;
+     case('south'):
+		currentLocale = nav[currentLocale][1];
+     break;
+     case('east'):
+		currentLocale = nav[currentLocale][2];
+     break;
+     case('west'):
+		currentLocale = nav[currentLocale][3];
+     break;
+     default: 
+		alert("Internal Error: unknown direction: " + dir + ".");
+	 break;
+   }
+   /*var dirArray = ["North","South","East","West"];
+	for(int i=0, i<4, i++){
+		if(nav[currentLocale][i]==-1)
+			dirArray[i].disabled = true;
+	}*/
+	if(nav[currentLocale][0]==-1){
+		document.getElementById("North").disabled = true;
+		}else{
+		document.getElementById("North").disabled = false;
+	}
+	updateDisplay();
+   }
+   function con(){
+    var console = document.getElementById("input");
+	switch(console.value.toLowerCase()){
+	case ("h"):
+		alert("List of commands: \nType 'h' or 'help' for help commands.\nType 'n' or 'north' to move north\nType 's' or 'south' to move south.\nType 'e' or 'east' to move east.\nType 'w' or 'west' to move south.\nType 'i' for inventory.\nType 'q' to give up... gg.");
+	break;
+	case ("help"):
+		alert("List of commands: \nType 'h' or 'help' for help commands.\nType 'n' or 'north' to move north\nType 's' or 'south' to move south.\nType 'e' or 'east' to move east.\nType 'w' or 'west' to move south.\nType 'i' for inventory.\nType 'q' to give up... gg.");
+	break;
+	case ("north"):
+		directions('north');
+	break;
+	case ("n"):
+		directions('north');
+	break;
+	case ("south"):
+		directions('s');
+	break;
+	case ("s"):
+		directions('south');
+	break;
+	case ("east"):
+		directions('east');
+	break;
+	case ("e"):
+		directions('east');
+	break;
+	case ("west"):
+		directions('west');
+	break;
+	case ("w"):
+		directions('west');
+	break;
+	default:
+		alert("Invalid Command.\n\nList of commands: \nType 'h' or 'help' for help commands.\nType 'n' or 'north' to move north\nType 's' or 'south' to move south.\nType 'e' or 'east' to move east.\nType 'w' or 'west' to move south.\nType 'i' for inventory.\nType 'q' to give up... gg.");
+	break;
+	}
+   }
+  </script>
+ </head>
+ <body onload="updateDisplay();">
+  <h2>The Lost Adventurer</h2>
+  <textarea id="loc" style="width:400px; height:200px;">
+  </textarea>
+  <textarea id="details" style="width:400px; height:50px;">
+  </textarea>
+  <br>
+  <textarea id="input" style="width:810px; height:16px;">
+  </textarea>
+  <input  type = "button"
+    value = "Confirm"
+    onClick = "con();">
+  <br>
+  <input  type = "button"
+    value = "North"
+    onClick = "go('north');">
+  <input  type = "button"
+    value = "South"
+    onClick = "go('south');">
+  <input  type = "button"
+    value = "East"
+    onClick = "go('east');">
+  <input  type = "button"
+    value = "West"
+    onClick = "go('west');">
+ </body>
+</html>
