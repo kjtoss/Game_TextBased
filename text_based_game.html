@@ -10,6 +10,10 @@
    var type = "";
    var points = 0;
    var nav = 0;
+   var items = [];
+   var itemsDes = [];
+   var itemsFound = 0;
+   var inventVis = 0;
    
    function startDisplay(){
    document.getElementById("input").value = "";
@@ -50,18 +54,50 @@
     case 2: 
      msg = "Student Center";
      msg2 = "You step into the main building on campus.  Hmmm what campus is this?";
+	 if(items[0]!="Campus Map"){
+	 items[0] = "Campus Map"; //name
+	 itemsDes[0] = "This Map may come in handy in the future!"; //description
+	 var invString = document.getElementById("invent");
+	 invString.value = invString.value + items[0] + "\n\n";
+	 var invDesString = document.getElementById("itemsDesBox");
+	 invDesString.value = invDesString.value + itemsDes[0] + "\n\n";
+	 }
     break;
     case 3: 
      msg = "River";
      msg2 = "You step into a large River.  It looks like the Hudson.. but the only way out is near Champagnat.";
+	 if(items[1]!="Fishing Rod"){
+	 items[1] = "Fishing Rod"; //name
+	 itemsDes[1] = "Not now, but I may fish in the future."; //description
+	 var invString = document.getElementById("invent");
+	 invString.value = invString.value + items[1] + "\n\n";
+	 var invDesString = document.getElementById("itemsDesBox");
+	 invDesString.value = invDesString.value + itemsDes[1] + "\n\n";
+	 }
     break;
     case 4: 
      msg = "Football Field";
      msg2 = "The sign says 'Tenney Stadium'";
+	 if(items[2]!="Football"){
+	 items[2] = "Football"; //name
+	 itemsDes[2] = "I miss throwing the old pigskin around.."; //description
+	 var invString = document.getElementById("invent");
+	 invString.value = invString.value + items[2] + "\n\n";
+	 var invDesString = document.getElementById("itemsDesBox");
+	 invDesString.value = invDesString.value + itemsDes[2] + "\n\n";
+	 }
     break;
     case 5: 
      msg = "McCann Center";
      msg2 = "You have arrived at the building for swimming, basketball, and workouts..";
+	 if(items[3]!="Weights"){
+	 items[3] = "Weights"; //name
+	 itemsDes[3] = "Do you even lift bro?"; //description
+	 var invString = document.getElementById("invent");
+	 invString.value = invString.value + items[3] + "\n\n";
+	 var invDesString = document.getElementById("itemsDesBox");
+	 invDesString.value = invDesString.value + itemsDes[3] + "\n\n";
+	 }
     break;
     case 6: 
      msg = "Donnelly";
@@ -74,6 +110,14 @@
     case 8: 
      msg = "Hell";
      msg2 = "The train runs over you, crushing ever bone in your body. The end.";
+	 if(items[4]!="Death's Scythe"){
+	 items[4] = "Death's Scythe"; //name
+	 itemsDes[4] = "By greeting Death head on, you have obtain his Scythe."; //description
+	 var invString = document.getElementById("invent");
+	 invString.value = invString.value + items[4] + "\n\n";
+	 var invDesString = document.getElementById("itemsDesBox");
+	 invDesString.value = invDesString.value + itemsDes[4] + "\n\n";
+	 }
     break;
     default:
      msg = "currentLocale matches no cases";
@@ -123,6 +167,28 @@
 			document.getElementById("d3").disabled = false;
 	updateDisplay();
    }
+   
+   function inventory(){
+   var inv = document.getElementById("invent");
+   if(inv.className=='hide')
+   {
+    inv.style.display = "inline";
+    inv.className ='show';
+   }else{
+    inv.style.display = "none";
+    inv.className ='hide';
+ }
+   var invD = document.getElementById("itemsDesBox");
+   if(invD.className=='hide')
+   {
+    invD.style.display = "inline";
+    invD.className ='show';
+   }else{
+    invD.style.display = "none";
+    invD.className ='hide';
+ }
+   }
+   
    function con(){
     var console = document.getElementById("input");
 	switch(console.value.toLowerCase()){
@@ -155,6 +221,9 @@
 	break;
 	case ("w"):
 		go('west');
+	break;
+	case ("i"):
+		inventory();
 	break;
 	default:
 		alert("Invalid Command.\n\nList of commands: \nType 'h' or 'help' for help with commands.\nType 'n' or 'north' to move north\nType 's' or 'south' to move south.\nType 'e' or 'east' to move east.\nType 'w' or 'west' to move south.\nType 'i' for inventory.\nType 'q' to give up... gg.");
@@ -194,8 +263,17 @@
 	id = "d3"
     onClick = "go('west');">
   <br>
-  <label>Experience:</label>
+  Experience:
   <textarea id="pts" style="width:16px; height:16px;">
+  </textarea>
+  <br>
+  <textarea id="invent" style="width:120px; height:400px; display:none" class="hide">
+  Inventory:
+  
+  </textarea>
+  <textarea id="itemsDesBox" style="width:400px; height:400px; display:none" class="hide">
+  Description:
+  
   </textarea>
  </body>
 </html>
