@@ -9,11 +9,31 @@
    var before = 0;
    var type = "";
    var points = 0;
-   var gained = [5,5,5,5,5,5,5,5,5];
+   var nav = 0;
+   
+   function startDisplay(){
+   document.getElementById("input").value = "";
    document.getElementById("pts").value = 0;
+   nav = 
+			[				
+	//Digit-Place	[N, S, E, W, Untraveled]
+	/*0-Champ*/		[2,  1, 4, 3, 1],
+	/*1-Leo*/		[0, -1, 5, -1, 1],
+	/*2-SC*/		[-1,  0, 6, -1, 1],
+	/*3-River*/		[3,  3, 0, -1, 1],
+	/*4-FB*/		[6,  5, 7, 0, 1],
+	/*5-McCann*/	[4,  -1, 7, 1, 1],
+	/*6-Donnelly*/	[-1,  4, 7, 2, 1],
+	/*7-Highway*/	[-1,  -1, 8, 2, 1],
+	/*8-Hell*/		[-1,  -1, -1, -1, 1]
+			];
+	updateDisplay();
+   }
    
    function updateDisplay(){
-   document.getElementById("input").value = "";
+	points=points+(nav[currentLocale][4]*5);
+	nav[currentLocale][4]=0;
+    document.getElementById("pts").value = points;
     switch(currentLocale){
     case -1: 
      msg = "You have reached the edge of the map.";		
@@ -65,27 +85,8 @@
 	iDet.value = msg2;
    }
 
-   function go(dir) {
-    directions(dir);
-   }
    
-   function directions(dir){
-	points=points+gained[currentLocale];
-	gained[currentLocale]=0;
-    document.getElementById("pts").value = points;
-	
-   var nav = 
-			[				
-	/*0-Champ*/		[2,  1, 4, 3],
-	/*1-Leo*/		[0, -1, 5, -1],
-	/*2-SC*/		[-1,  0, 6, -1],
-	/*3-River*/		[3,  3, 0, -1],
-	/*4-FB*/		[6,  5, 7, 0],
-	/*5-McCann*/	[4,  -1, 7, 1],
-	/*6-Donnelly*/	[-1,  4, 7, 2],
-	/*7-Highway*/	[-1,  -1, 8, 2],
-	/*8-Hell*/		[-1,  -1, -1, -1]
-			];
+   function go(dir){
 	before = currentLocale;
     switch(dir){
      case('north'):
@@ -120,51 +121,49 @@
 			document.getElementById("d3").disabled = true;
 		else
 			document.getElementById("d3").disabled = false;
-			
-	
 	updateDisplay();
    }
    function con(){
     var console = document.getElementById("input");
 	switch(console.value.toLowerCase()){
 	case ("h"):
-		alert("List of commands: \nType 'h' or 'help' for help commands.\nType 'n' or 'north' to move north\nType 's' or 'south' to move south.\nType 'e' or 'east' to move east.\nType 'w' or 'west' to move south.\nType 'i' for inventory.\nType 'q' to give up... gg.");
+		alert("List of commands: \nType 'h' or 'help' for help with commands.\nType 'n' or 'north' to move north\nType 's' or 'south' to move south.\nType 'e' or 'east' to move east.\nType 'w' or 'west' to move south.\nType 'i' for inventory.\nType 'q' to give up... gg.");
 	break;
 	case ("help"):
-		alert("List of commands: \nType 'h' or 'help' for help commands.\nType 'n' or 'north' to move north\nType 's' or 'south' to move south.\nType 'e' or 'east' to move east.\nType 'w' or 'west' to move south.\nType 'i' for inventory.\nType 'q' to give up... gg.");
+		alert("List of commands: \nType 'h' or 'help' for help with commands.\nType 'n' or 'north' to move north\nType 's' or 'south' to move south.\nType 'e' or 'east' to move east.\nType 'w' or 'west' to move south.\nType 'i' for inventory.\nType 'q' to give up... gg.");
 	break;
 	case ("north"):
-		directions('north');
+		go('north');
 	break;
 	case ("n"):
-		directions('north');
+		go('north');
 	break;
 	case ("south"):
-		directions('s');
+		go('s');
 	break;
 	case ("s"):
-		directions('south');
+		go('south');
 	break;
 	case ("east"):
-		directions('east');
+		go('east');
 	break;
 	case ("e"):
-		directions('east');
+		go('east');
 	break;
 	case ("west"):
-		directions('west');
+		go('west');
 	break;
 	case ("w"):
-		directions('west');
+		go('west');
 	break;
 	default:
-		alert("Invalid Command.\n\nList of commands: \nType 'h' or 'help' for help commands.\nType 'n' or 'north' to move north\nType 's' or 'south' to move south.\nType 'e' or 'east' to move east.\nType 'w' or 'west' to move south.\nType 'i' for inventory.\nType 'q' to give up... gg.");
+		alert("Invalid Command.\n\nList of commands: \nType 'h' or 'help' for help with commands.\nType 'n' or 'north' to move north\nType 's' or 'south' to move south.\nType 'e' or 'east' to move east.\nType 'w' or 'west' to move south.\nType 'i' for inventory.\nType 'q' to give up... gg.");
 	break;
 	}
    }
   </script>
  </head>
- <body onload="updateDisplay();">
+ <body onload="startDisplay();">
   <h2>The Lost Adventurer</h2>
   <h3>You woke up this morning to find yourself in a land you have never been before.  Where would you like to travel? Remember, the more you travel, the more experience you get!</h3>
   <textarea id="loc" style="width:400px; height:200px;">
