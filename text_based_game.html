@@ -54,49 +54,57 @@
     case 2: 
      msg = "Student Center";
      msg2 = "You step into the main building on campus.  Hmmm what campus is this?";
-	 if(items[0]!="Campus Map"){
-	 items[0] = "Campus Map"; //name
-	 itemsDes[0] = "This Map may come in handy in the future!"; //description
-	 var invString = document.getElementById("invent");
-	 invString.value = invString.value + items[0] + "\n\n";
-	 var invDesString = document.getElementById("itemsDesBox");
-	 invDesString.value = invDesString.value + itemsDes[0] + "\n\n";
+	 if(items[0]!="\nCampus Map"){
+		if(confirm('You have discovered a "Campus Map!" Would you like to pick it up? \n[submit "i" in the console to view your inventory.')){
+			items[0] = "\nCampus Map"; //name
+			itemsDes[0] = "\nThis Map may come in handy in the future!"; //description
+			var invString = document.getElementById("invent");
+			invString.value = invString.value + items[0] + "\n";
+			var invDesString = document.getElementById("itemsDesBox");
+			invDesString.value = invDesString.value + itemsDes[0] + "\n";
+		}
 	 }
     break;
     case 3: 
      msg = "River";
      msg2 = "You step into a large River.  It looks like the Hudson.. but the only way out is near Champagnat.";
-	 if(items[1]!="Fishing Rod"){
-	 items[1] = "Fishing Rod"; //name
-	 itemsDes[1] = "Not now, but I may fish in the future."; //description
-	 var invString = document.getElementById("invent");
-	 invString.value = invString.value + items[1] + "\n\n";
-	 var invDesString = document.getElementById("itemsDesBox");
-	 invDesString.value = invDesString.value + itemsDes[1] + "\n\n";
+	 if(items[1]!="\nFishing Rod"){
+		if (confirm('You have discovered a "Fishing Rod!" Would you like to pick it up? \n[submit "i" in the console to view your inventory.')){
+			items[1] = "\nFishing Rod"; //name
+			itemsDes[1] = "\nNot now, but I may fish in the future."; //description
+			var invString = document.getElementById("invent");
+			invString.value = invString.value + items[1] + "\n";
+			var invDesString = document.getElementById("itemsDesBox");
+			invDesString.value = invDesString.value + itemsDes[1] + "\n";
+		}
 	 }
     break;
     case 4: 
      msg = "Football Field";
      msg2 = "The sign says 'Tenney Stadium'";
-	 if(items[2]!="Football"){
-	 items[2] = "Football"; //name
-	 itemsDes[2] = "I miss throwing the old pigskin around.."; //description
-	 var invString = document.getElementById("invent");
-	 invString.value = invString.value + items[2] + "\n\n";
-	 var invDesString = document.getElementById("itemsDesBox");
-	 invDesString.value = invDesString.value + itemsDes[2] + "\n\n";
+	 if(items[2]!="\nFootball"){
+		if(confirm('You have discovered a "Football!" Would you like to pick it up? \n[submit "i" in the console to view your inventory.')){
+			items[2] = "\nFootball"; //name
+			itemsDes[2] = "\nI miss throwing the old pigskin around.."; //description
+			var invString = document.getElementById("invent");
+			invString.value = invString.value + items[2] + "\n";
+			var invDesString = document.getElementById("itemsDesBox");
+			invDesString.value = invDesString.value + itemsDes[2] + "\n";
+		}
 	 }
     break;
     case 5: 
      msg = "McCann Center";
      msg2 = "You have arrived at the building for swimming, basketball, and workouts..";
-	 if(items[3]!="Weights"){
-	 items[3] = "Weights"; //name
-	 itemsDes[3] = "Do you even lift bro?"; //description
-	 var invString = document.getElementById("invent");
-	 invString.value = invString.value + items[3] + "\n\n";
-	 var invDesString = document.getElementById("itemsDesBox");
-	 invDesString.value = invDesString.value + itemsDes[3] + "\n\n";
+	 if(items[3]!="\nWeights"){
+		if(confirm('You have discovered "Weights!" Would you like to pick it up? \n[submit "i" in the console to view your inventory.')){
+			items[3] = "\nWeights"; //name
+			itemsDes[3] = "\nDo you even lift bro?"; //description
+			var invString = document.getElementById("invent");
+			invString.value = invString.value + items[3] + "\n";
+			var invDesString = document.getElementById("itemsDesBox");
+			invDesString.value = invDesString.value + itemsDes[3] + "\n";
+		}
 	 }
     break;
     case 6: 
@@ -109,14 +117,14 @@
     break;
     case 8: 
      msg = "Hell";
-     msg2 = "The train runs over you, crushing ever bone in your body. The end.";
+     msg2 = "The train runs over you, crushing ever bone in your body.\nDeath brings down his arms, forcing a scythe that tears through your body,ripping your soul from it.";
 	 if(items[4]!="Death's Scythe"){
-	 items[4] = "Death's Scythe"; //name
-	 itemsDes[4] = "By greeting Death head on, you have obtain his Scythe."; //description
+	 items[4] = "\nDeath's Scythe"; //name
+	 itemsDes[4] = "\nBy greeting Death head on, you have forcefully obtained his Scythe."; //description	
 	 var invString = document.getElementById("invent");
-	 invString.value = invString.value + items[4] + "\n\n";
+	 invString.value = invString.value + items[4] + "\n";
 	 var invDesString = document.getElementById("itemsDesBox");
-	 invDesString.value = invDesString.value + itemsDes[4] + "\n\n";
+	 invDesString.value = invDesString.value + itemsDes[4] + "\n";
 	 }
     break;
     default:
@@ -237,7 +245,7 @@
   <h3>You woke up this morning to find yourself in a land you have never been before.  Where would you like to travel? Remember, the more you travel, the more experience you get!</h3>
   <textarea id="loc" style="width:400px; height:200px;">
   </textarea>
-  <textarea id="details" style="width:400px; height:50px;">
+  <textarea id="details" style="width:400px; height:100px;">
   </textarea>
   <br>
   <textarea id="input" style="width:810px; height:16px;">
@@ -269,11 +277,9 @@
   <br>
   <textarea id="invent" style="width:120px; height:400px; display:none" class="hide">
   Inventory:
-  
   </textarea>
   <textarea id="itemsDesBox" style="width:400px; height:400px; display:none" class="hide">
   Description:
-  
   </textarea>
  </body>
 </html>
