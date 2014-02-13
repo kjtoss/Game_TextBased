@@ -276,50 +276,58 @@
    }
   </script>
  </head>
- <body onload="startDisplay();">
-  <h2>The Lost Adventurer</h2>
+ <body onload="startDisplay();" bgcolor="#00aa11">
+  <h1><font color = "#402010"><b>The Lost Adventurer</b></font></h1>
   <h3>You woke up this morning to find yourself in a land you have never been before.  Where would you like to travel? Remember, the more you travel, the more experience you get!</h3>
-  <textarea id="loc" style="width:450px; height:200px;" readonly = "readonly">
+  <textarea id="loc" style="width:450px; height:200px; background:#604020; border-color:#51dd51; color:#ffffff;" readonly = "readonly" >
   </textarea>
-  <textarea id="details" style="width:450px; height:100px;" readonly = "readyonly">
+  <textarea id="details" style="width:450px; height:100px; background:#604020; border-color:#51dd51; color:#ffffff;" readonly = "readyonly">
   </textarea>
   <br>
-  <textarea id="input" style="width:910px; height:16px;" onkeydown="if (event.keyCode == 13){ document.getElementById('confirm').click()}">
+  <br>
+  <textarea id="input" style="width:910px; height:16px; background:#604020; border-color:#51dd51; color:#ffffff;" onkeydown="if (event.keyCode == 13){ document.getElementById('confirm').click()}">
   </textarea>
   <input  type = "button"
   id = "confirm";
     value = "Confirm"
     onClick = "con();"
-	>
+	style = "background:#3aff3a; border-color:#51dd51;">
   <br>
   <input  type = "button"
     value = "North"
 	id = "d0"
-    onClick = "go('north');">
+    onClick = "go('north');"
+	style = "background:#3aff3a; border-color:#51dd51;">
   <input  type = "button"
     value = "South"
 	id = "d1"
-    onClick = "go('south');">
+    onClick = "go('south');"
+	style = "background:#3aff3a; border-color:#51dd51;">
   <input  type = "button"
     value = "East"
 	id = "d2"
-    onClick = "go('east');">
+    onClick = "go('east');"
+	style = "background:#3aff3a; border-color:#51dd51;">
   <input  type = "button"
     value = "West"
 	id = "d3"
-    onClick = "go('west');">
+    onClick = "go('west');"
+	style = "background:#3aff3a; border-color:#51dd51;">
   <br>
-  Experience:
-  <textarea id="pts" style="width:50px; height:16px;" readonly = "readyonly">
+  <br>
+  <font color = "#402010"><b>Experience:</b></font>
+  <textarea id="pts" style="width:50px; height:16px; background:#604020; border-color:#51dd51; color:#ffffff;" readonly = "readyonly">
   </textarea>
   <br>
-  <textarea id="invent" style="width:120px; height:400px; display:none" class="hide" readonly = "readyonly">
+  <br>
+  <br>
+  <textarea id="invent" style="width:120px; height:400px; background:#604020; border-color:#51dd51; color:#ffffff; display:none" class="hide" readonly = "readyonly">
   Inventory:
   </textarea>
-  <textarea id="itemsDesBox" style="width:400px; height:400px; display:none" class="hide" readonly = "readyonly">
+  <textarea id="itemsDesBox" style="width:400px; height:400px; background:#604020; border-color:#51dd51; color:#ffffff; display:none" class="hide" readonly = "readyonly">
   Description:
   </textarea>
-  <textarea id="help" style="width:400px; height:200px; display:block" class="show" readonly = "readyonly">
+  <textarea id="help" style="width:400px; height:200px; background:#604020; border-color:#51dd51; color:#ffffff; display:block" class="show" readonly = "readyonly">
   Help:
   
   List of commands: 
