@@ -1,0 +1,335 @@
+<!doctype HTML>
+<html>
+ <head>
+  <title>The Lost Adventurer</title>
+  <script>
+   var currentLocale = 0;
+   var msg = "";
+   var msg2 = "";
+   var before = 0;
+   var type = "";
+   var points = 0;
+   var nav = 0;
+   var items = [];
+   var itemsGrab = [0,0,0,0,0];
+   var itemsDes = [];
+   var itemsFound = 0;
+   var inventVis = 0;
+   
+   function startDisplay(){
+   document.getElementById("input").value = "";
+   document.getElementById("pts").value = 0;
+   nav = 
+			[				
+	//Digit-Place	[N, S, E, W, Untraveled]
+	/*0-Champ*/		[2,  1, 4, 3, 1],
+	/*1-Leo*/		[0, -1, 5, -1, 1],
+	/*2-SC*/		[-1,  0, 6, -1, 1],
+	/*3-River*/		[3,  3, 0, -1, 1],
+	/*4-FB*/		[6,  5, 7, 0, 1],
+	/*5-McCann*/	[4,  -1, 7, 1, 1],
+	/*6-Donnelly*/	[-1,  4, 7, 2, 1],
+	/*7-Highway*/	[-1,  -1, 8, 4, 1],
+	/*8-Hell*/		[-1,  -1, -1, -1, 1]
+			];
+	updateDisplay();
+   }
+   
+   function updateDisplay(){
+	points=points+(nav[currentLocale][4]*5);
+	nav[currentLocale][4]=0;
+    document.getElementById("pts").value = points;
+    switch(currentLocale){
+    case -1: 
+     msg = "You have reached the edge of the map.";		
+	 currentLocale = before;
+    break;
+    case 0: 
+     msg = "Champagnat";	
+     msg2 = "You have arrived at the largest freshman dorm.";
+    break;
+    case 1: 
+     msg = "Leo";
+     msg2 = "You have arrived at the second largest freshman dorm.";
+    break;
+    case 2: 
+     msg = "Student Center";
+	 if(itemsGrab[0]==0)
+		msg2='You step into the main building on campus.  Hmmm what campus is this?\n\nYou have discovered a "Campus Map!" Would you like to grab it ("g")? \n[submit "i" in the console to view your inventory.]';
+	 else
+		msg2='You step into the main building on campus.  Hmmm what campus is this?';
+	itemsGrab[0]=1;
+    break;
+    case 3: 
+     msg = "River";
+	 if(itemsGrab[1]==0)
+		msg2='You step into a large River.  It looks like the Hudson.. but the only way out is near Champagnat.\n\nYou have discovered a "Fishing Rod!" Would you like to grab it ("g")? \n[submit "i" in the console to view your inventory.]';
+	 else
+		msg2='You step into a large River.  It looks like the Hudson.. but the only way out is near Champagnat.';
+     itemsGrab[1]=1;
+	break;
+    case 4: 
+     msg = "Football Field";
+	 if(itemsGrab[2]==0)
+		msg2='The sign says "Tenney Stadium"\n\nYou have discovered a "Football!" Would you like to grab it ("g")? \n[submit "i" in the console to view your inventory.]';
+	 itemsGrab[2]=1;
+    break;
+    case 5: 
+     msg = "McCann Center";
+     msg2 = 'You have arrived at the building for swimming, basketball, and workouts.';
+	 if(itemsGrab[3]==0)
+		msg2+='\n\nYou have discovered "Weights!" Would you like to grab it ("g")? \n[submit "i" in the console to view your inventory.]';
+	 else
+		msg2='The sign says "Tenney Stadium"';
+	 itemsGrab[3]=1;
+    break;
+    case 6: 
+     msg = "Donnelly";
+     msg2 = "What is this? A building with both science and fashion? Odd...";
+    break;
+    case 7: 
+     msg = "Highway";
+     msg2 = "You have found yourself mistakenly walking onto a highway, where a mysterious train materialized right in front of you. You must go back or die.";
+    break;
+    case 8: 
+     msg = "Hell";
+     msg2 = "The train runs over you, crushing ever bone in your body.\nDeath brings down his arms, forcing a scythe that tears through your body, ripping your soul from it.\n\nYou have obtained Death's Scythe!";
+	 if(items[4]!="Death's Scythe"){
+	 items[4] = "\nDeath's Scythe"; //name
+	 itemsDes[4] = "\nBy greeting Death head on, you have forcefully obtained his Scythe."; //description	
+	 var invString = document.getElementById("invent");
+	 invString.value = invString.value + items[4] + "\n";
+	 var invDesString = document.getElementById("itemsDesBox");
+	 invDesString.value = invDesString.value + itemsDes[4] + "\n";
+	 }
+    break;
+    default:
+     msg = "currentLocale matches no cases";
+    }
+    var iPtr = document.getElementById("loc");
+    var history = iPtr.value;
+    iPtr.value = msg + "\n" + history; 
+	var iDet = document.getElementById("details");
+	iDet.value = msg2;
+   }
+
+   
+   function go(dir){
+	before = currentLocale;
+    switch(dir){
+     case('north'):
+		currentLocale = nav[currentLocale][0];
+     break;
+     case('south'):
+		currentLocale = nav[currentLocale][1];
+     break;
+     case('east'):
+		currentLocale = nav[currentLocale][2];
+     break;
+     case('west'):
+		currentLocale = nav[currentLocale][3];
+     break;
+     default: 
+		msg2="Internal Error: unknown direction: " + dir;
+		var iDet = document.getElementById("details");
+		iDet.value = msg2;
+	 break;
+   }
+		if(nav[currentLocale][0]==-1)
+			document.getElementById("d0").disabled = true;
+		else
+			document.getElementById("d0").disabled = false;
+		if(nav[currentLocale][1]==-1)
+			document.getElementById("d1").disabled = true;
+		else
+			document.getElementById("d1").disabled = false;
+		if(nav[currentLocale][2]==-1)
+			document.getElementById("d2").disabled = true;
+		else
+			document.getElementById("d2").disabled = false;
+		if(nav[currentLocale][3]==-1)
+			document.getElementById("d3").disabled = true;
+		else
+			document.getElementById("d3").disabled = false;
+	updateDisplay();
+   }
+   
+   function inventory(){
+   var inv = document.getElementById("invent");
+   if(inv.className=='hide')
+   {
+    inv.style.display = "inline";
+    inv.className ='show';
+   }else{
+    inv.style.display = "none";
+    inv.className ='hide';
+ }
+   var invD = document.getElementById("itemsDesBox");
+   if(invD.className=='hide')
+   {
+    invD.style.display = "inline";
+    invD.className ='show';
+   }else{
+    invD.style.display = "none";
+    invD.className ='hide';
+ }
+   }
+   
+	function con(){
+    var console = document.getElementById("input");
+	switch(console.value.toLowerCase()){
+	case ("h"):
+	var hhh = document.getElementById("help");
+	if(hhh.className=='hide')
+	{
+		hhh.style.display = "inline";
+		hhh.className ='show';
+    }else{
+		hhh.style.display = "none";
+		hhh.className ='hide';
+	}
+	break;
+	case ("help"):
+	var hhh = document.getElementById("help");
+   if(hhh.className=='hide')
+   {
+    hhh.style.display = "inline";
+    hhh.className ='show';
+   }else{
+    hhh.style.display = "none";
+    hhh.className ='hide';
+	}
+	break;
+	case ("north"):
+		go('north');
+	break;
+	case ("n"):
+		go('north');
+	break;
+	case ("south"):
+		go('s');
+	break;
+	case ("s"):
+		go('south');
+	break;
+	case ("east"):
+		go('east');
+	break;
+	case ("e"):
+		go('east');
+	break;
+	case ("west"):
+		go('west');
+	break;
+	case ("w"):
+		go('west');
+	break;
+	case ("i"):
+		inventory();
+	break;
+	case ("g"):
+		if(items[0]!="\nCampus Map" && itemsGrab[0]==1){
+			items[0] = "\nCampus Map"; //name
+			itemsDes[0] = "\nThis Map may come in handy in the future!"; //description
+			var invString = document.getElementById("invent");
+			invString.value = invString.value + items[0] + "\n";
+			var invDesString = document.getElementById("itemsDesBox");
+			invDesString.value = invDesString.value + itemsDes[0] + "\n";
+		}
+		if(items[1]!="\nFishing Rod" && itemsGrab[1]==1){
+			items[1] = "\nFishing Rod"; //name
+			itemsDes[1] = "\nNot now, but I may fish in the future."; //description
+			var invString = document.getElementById("invent");
+			invString.value = invString.value + items[1] + "\n";
+			var invDesString = document.getElementById("itemsDesBox");
+			invDesString.value = invDesString.value + itemsDes[1] + "\n";
+			var iDet = document.getElementById("details");
+			iDet.value = msg2;
+		}
+		if(items[2]!="\nFootball" && itemsGrab[2]==1){
+			items[2] = "\nFootball"; //name
+			itemsDes[2] = "\nI miss throwing the old pigskin around.."; //description
+			var invString = document.getElementById("invent");
+			invString.value = invString.value + items[2] + "\n";
+			var invDesString = document.getElementById("itemsDesBox");
+			invDesString.value = invDesString.value + itemsDes[2] + "\n";
+		}
+		if(items[3]!="\nWeights" && itemsGrab[3]==1){
+			items[3] = "\nWeights"; //name
+			itemsDes[3] = "\nDo you even lift bro?"; //description
+			var invString = document.getElementById("invent");
+			invString.value = invString.value + items[3] + "\n";
+			var invDesString = document.getElementById("itemsDesBox");
+			invDesString.value = invDesString.value + itemsDes[3] + "\n";
+		}
+		for(var i=0; i<4; i++){
+			itemsGrab[i]=0;
+			}
+	break;
+	default:
+		msg2="Invalid command. Enter 'h' or 'help' to view the available commands.";
+		var iDet = document.getElementById("details");
+		iDet.value = msg2;
+	break;
+	}
+	document.getElementById("input").value = "";  // FIX FIX FIX FIX FIX
+   }
+  </script>
+ </head>
+ <body onload="startDisplay();">
+  <h2>The Lost Adventurer</h2>
+  <h3>You woke up this morning to find yourself in a land you have never been before.  Where would you like to travel? Remember, the more you travel, the more experience you get!</h3>
+  <textarea id="loc" style="width:450px; height:200px;" readonly = "readonly">
+  </textarea>
+  <textarea id="details" style="width:450px; height:100px;" readonly = "readyonly">
+  </textarea>
+  <br>
+  <textarea id="input" style="width:910px; height:16px;" onkeydown="if (event.keyCode == 13){ document.getElementById('confirm').click()}">
+  </textarea>
+  <input  type = "button"
+  id = "confirm";
+    value = "Confirm"
+    onClick = "con();"
+	>
+  <br>
+  <input  type = "button"
+    value = "North"
+	id = "d0"
+    onClick = "go('north');">
+  <input  type = "button"
+    value = "South"
+	id = "d1"
+    onClick = "go('south');">
+  <input  type = "button"
+    value = "East"
+	id = "d2"
+    onClick = "go('east');">
+  <input  type = "button"
+    value = "West"
+	id = "d3"
+    onClick = "go('west');">
+  <br>
+  Experience:
+  <textarea id="pts" style="width:50px; height:16px;" readonly = "readyonly">
+  </textarea>
+  <br>
+  <textarea id="invent" style="width:120px; height:400px; display:none" class="hide" readonly = "readyonly">
+  Inventory:
+  </textarea>
+  <textarea id="itemsDesBox" style="width:400px; height:400px; display:none" class="hide" readonly = "readyonly">
+  Description:
+  </textarea>
+  <textarea id="help" style="width:400px; height:200px; display:block" class="show" readonly = "readyonly">
+  Help:
+  
+  List of commands: 
+  Type 'h' or 'help' for help with commands.
+  Type 'n' or 'north' to move north.
+  Type 's' or 'south' to move south.
+  Type 'e' or 'east' to move east.
+  Type 'w' or 'west' to move south.
+  Type 'i' for inventory.
+  Type 'g' to grab an item.
+  </textarea>
+ </body>
+</html>
