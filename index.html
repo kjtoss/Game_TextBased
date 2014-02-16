@@ -145,7 +145,7 @@
   
 	function con(){
 		var console = document.getElementById("input");
-		switch(console.value.toLowerCase()){
+		switch(console.value.toLowerCase()){ //NOT case sensitive
 			case ("h"):
 				var hhh = document.getElementById("help");
 				if(hhh.className=='hide')
@@ -169,28 +169,76 @@
 				}
 			break;
 			case ("north"):
+            if(nav[currentLocale][0]!=-1){
 				go('north');
+            }else{
+                msg='You have reached the edge of the map.';
+                var iPtr = document.getElementById("loc");
+                var history = iPtr.value;
+                iPtr.value = msg + "\n" + history; }
 			break;
 			case ("n"):
+            if(nav[currentLocale][0]!=-1){
 				go('north');
+            }else{
+                msg='You have reached the edge of the map.';
+                var iPtr = document.getElementById("loc");
+                var history = iPtr.value;
+                iPtr.value = msg + "\n" + history; }
 			break;
 			case ("south"):
-				go('s');
+            if(nav[currentLocale][1]!=-1){
+				go('south');
+            }else{
+                msg='You have reached the edge of the map.';
+                var iPtr = document.getElementById("loc");
+                var history = iPtr.value;
+                iPtr.value = msg + "\n" + history; }
 			break;
 			case ("s"):
+            if(nav[currentLocale][1]!=-1){
 				go('south');
+            }else{
+                msg='You have reached the edge of the map.';
+                var iPtr = document.getElementById("loc");
+                var history = iPtr.value;
+                iPtr.value = msg + "\n" + history; }
 			break;
 			case ("east"):
+            if(nav[currentLocale][2]!=-1){
 				go('east');
+            }else{
+                msg='You have reached the edge of the map.';
+                var iPtr = document.getElementById("loc");
+                var history = iPtr.value;
+                iPtr.value = msg + "\n" + history; }
 			break;
 			case ("e"):
+            if(nav[currentLocale][2]!=-1){
 				go('east');
+            }else{
+                msg='You have reached the edge of the map.';
+                var iPtr = document.getElementById("loc");
+                var history = iPtr.value;
+                iPtr.value = msg + "\n" + history; }
 			break;
 			case ("west"):
+            if(nav[currentLocale][3]!=-1){
 				go('west');
+            }else{
+                msg='You have reached the edge of the map.';
+                var iPtr = document.getElementById("loc");
+                var history = iPtr.value;
+                iPtr.value = msg + "\n" + history; }
 			break;
 			case ("w"):
+            if(nav[currentLocale][3]!=-1){
 				go('west');
+            }else{
+                msg='You have reached the edge of the map.';
+                var iPtr = document.getElementById("loc");
+                var history = iPtr.value;
+                iPtr.value = msg + "\n" + history; }
 			break;
 			case ("i"):
 				inventory();
@@ -229,7 +277,7 @@
 				iDet.value = msg2;
 			break;
 		}
-		document.getElementById("input").value = "";  // FIX FIX FIX FIX FIX
+		document.getElementById("input").value = "";
 	}
 
     </script>
@@ -245,8 +293,10 @@
   </textarea>
   <br>
   <br>
-  <textarea id="input" style="width:910px; height:16px; background:#604020; border-color:#51dd51; color:#ffffff;" onkeydown="if (event.keyCode == 13){ document.getElementById('confirm').click()}">
-  </textarea>
+  <input  type = "text" 
+    id="input" 
+    style="width:910px; height:16px; background:#604020; border-color:#51dd51; color:#ffffff;" 
+    onkeydown="if (event.keyCode == 13){ document.getElementById('confirm').click()}">
   <input  type = "button"
     id = "confirm";
     value = "Confirm"
