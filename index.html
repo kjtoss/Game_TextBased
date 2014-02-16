@@ -11,13 +11,12 @@
     var points = 0;
     var nav = 0;
     var items = new Array();
-    var itemsGrab = [0,0,0,0,0];
     var itemsDes = new Array();
     var itemsFound = 0;
     var inventVis = 0;
     var loc = new Array();
     
-    function Locale(id, name, desc){
+    function Locale(id, name, desc){ //prototype for Location
         this.id = id;
         this.name = name;
         this.desc = desc;
@@ -25,6 +24,7 @@
         return "[Locale = " + this.id + " Name = " + this.name + " Description = " + this.desc + "]";
         }
     }    
+    //globals using prototype:
         loc[0] = new Locale(0, 'Champagnat', 'You have arrived at the largest freshman dorm.');
         loc[1] = new Locale(1, 'Leo', 'You have arrived at the second largest freshman dorm.');
         loc[2] = new Locale(2, 'Student Center', 'You step into the main building on campus.  Hmmm what campus is this?\n\nYou have discovered a "Campus Map!" Would you like to grab it ("g")? \n[submit "i" in the console to view your inventory.]');
@@ -59,74 +59,8 @@
 		points=points+(nav[currentLocale][4]*5);
 		nav[currentLocale][4]=0;
 		document.getElementById("pts").value = points;
-		switch(currentLocale){
-			case -1: 
-				msg = "You have reached the edge of the map.";		
-				currentLocale = before;
-			break;
-			case 0: 
-				msg = "Champagnat";	
-				msg2 = "You have arrived at the largest freshman dorm.";
-			break;
-			case 1: 
-				msg = "Leo";
-				msg2 = "You have arrived at the second largest freshman dorm.";
-			break;
-			case 2: 
-				msg = "Student Center";
-				if(itemsGrab[0]==0)
-					msg2='You step into the main building on campus.  Hmmm what campus is this?\n\nYou have discovered a "Campus Map!" Would you like to grab it ("g")? \n[submit "i" in the console to view your inventory.]';
-				else
-					msg2='You step into the main building on campus.  Hmmm what campus is this?';
-					itemsGrab[0]=1;
-			break;
-			case 3: 
-				msg = "River";
-				if(itemsGrab[1]==0)
-					msg2='You step into a large River.  It looks like the Hudson.. but the only way out is near Champagnat.\n\nYou have discovered a "Fishing Rod!" Would you like to grab it ("g")? \n[submit "i" in the console to view your inventory.]';
-				else
-					msg2='You step into a large River.  It looks like the Hudson.. but the only way out is near Champagnat.';
-					itemsGrab[1]=1;
-				break;
-			case 4: 
-				msg = "Football Field";
-				if(itemsGrab[2]==0)
-					msg2='The sign says "Tenney Stadium"\n\nYou have discovered a "Football!" Would you like to grab it ("g")? \n[submit "i" in the console to view your inventory.]';
-				else
-                    msg2='The sign says "Tenney Stadium"';
-                    itemsGrab[2]=1;
-			break;
-			case 5: 
-				msg = "McCann Center";
-				if(itemsGrab[3]==0)
-					msg2+='You have arrived at the building for swimming, basketball, and workouts.\n\nYou have discovered "Weights!" Would you like to grab it ("g")? \n[submit "i" in the console to view your inventory.]';
-				else
-                    msg2='You have arrived at the building for swimming, basketball, and workouts.';
-				itemsGrab[3]=1;
-			break;
-			case 6: 
-				msg = "Donnelly";
-				msg2 = "What is this? A building with both science and fashion? Odd...";
-			break;
-			case 7: 
-				msg = "Highway";
-				msg2 = "You have found yourself mistakenly walking onto a highway, where a mysterious train materialized right in front of you. You must go back or die.";
-			break;
-			case 8: 
-				msg = "Hell";
-				msg2 = "The train runs over you, crushing ever bone in your body.\nDeath brings down his arms, forcing a scythe that tears through your body, ripping your soul from it.\n\nYou have obtained Death's Scythe!";
-				if(items[4]!="Death's Scythe"){
-					items[4] = "\nDeath's Scythe"; //name
-					itemsDes[4] = "\nBy greeting Death head on, you have forcefully obtained his Scythe."; //description	
-					var invString = document.getElementById("invent");
-					invString.value = invString.value + items[4] + "\n";
-					var invDesString = document.getElementById("itemsDesBox");
-					invDesString.value = invDesString.value + itemsDes[4] + "\n";
-				}
-			break;
-			default:
-				msg = "currentLocale matches no cases";
-		}
+        msg = loc[currentLocale].name;
+        msg2 = loc[currentLocale].desc;
 		var iPtr = document.getElementById("loc");
 		var history = iPtr.value;
 		iPtr.value = msg + "\n" + history; 
@@ -249,42 +183,37 @@
 				inventory();
 			break;
 			case ("g"):
-				if(items[0]!="\nCampus Map" && itemsGrab[0]==1){
-					items[0] = "\nCampus Map"; //name
-					itemsDes[0] = "\nThis Map may come in handy in the future!"; //description
-					var invString = document.getElementById("invent");
+				var invString = document.getElementById("invent");
+				var invDesString = document.getElementById("itemsDesBox");
+				if(items[0]!='\nCampus Map' && currentLocale == 2){
+					items[0] = '\nCampus Map'; //name
+					itemsDes[0] = '\nThis Map may come in handy in the future!'; //description
 					invString.value = invString.value + items[0] + "\n";
-					var invDesString = document.getElementById("itemsDesBox");
 					invDesString.value = invDesString.value + itemsDes[0] + "\n";
 				}
-				if(items[1]!="\nFishing Rod" && itemsGrab[1]==1){
-					items[1] = "\nFishing Rod"; //name
-					itemsDes[1] = "\nNot now, but I may fish in the future."; //description
-					var invString = document.getElementById("invent");
+				if(items[1]!='\nFishing Rod' && currentLocale == 3){
+					items[1] = '\nFishing Rod'; //name
+					itemsDes[1] = '\nNot now, but I may fish in the future.'; //description
 					invString.value = invString.value + items[1] + "\n";
-					var invDesString = document.getElementById("itemsDesBox");
 					invDesString.value = invDesString.value + itemsDes[1] + "\n";
-					var iDet = document.getElementById("details");
-					iDet.value = msg2;
 				}
-				if(items[2]!="\nFootball" && itemsGrab[2]==1){
-					items[2] = "\nFootball"; //name
-					itemsDes[2] = "\nI miss throwing the old pigskin around.."; //description
-					var invString = document.getElementById("invent");
+				if(items[2]!='\nFootball' && currentLocale == 4){
+					items[2] = '\nFootball'; //name
+					itemsDes[2] = '\nI miss throwing the old pigskin around..'; //description
 					invString.value = invString.value + items[2] + "\n";
-					var invDesString = document.getElementById("itemsDesBox");
 					invDesString.value = invDesString.value + itemsDes[2] + "\n";
 				}
-				if(items[3]!="\nWeights" && itemsGrab[3]==1){
-					items[3] = "\nWeights"; //name
-					itemsDes[3] = "\nDo you even lift bro?"; //description
-					var invString = document.getElementById("invent");
+				if(items[3]!='\nWeights' && currentLocale == 5){
+					items[3] = '\nWeights'; //name
+					itemsDes[3] = '\nDo you even lift bro?'; //description
 					invString.value = invString.value + items[3] + "\n";
-					var invDesString = document.getElementById("itemsDesBox");
 					invDesString.value = invDesString.value + itemsDes[3] + "\n";
 				}
-				for(var i=0; i<4; i++){
-					itemsGrab[i]=0;
+                if(items[4]!="Death's Scythe" && currentLocale == 8){
+					items[4] = "\nDeath's Scythe"; //name
+					itemsDes[4] = "\nBy greeting Death head on, you have forcefully obtained his Scythe."; //description
+					invString.value = invString.value + items[4] + "\n";
+					invDesString.value = invDesString.value + itemsDes[4] + "\n";
 				}
 			break;
 			default:
