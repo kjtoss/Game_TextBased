@@ -15,15 +15,16 @@
     var itemsFound = 0;
     var inventVis = 0;
     var loc = new Array();
+    var locItem = new Array();
     
     function Locale(id, name, desc){ //prototype for Location
         this.id = id;
         this.name = name;
         this.desc = desc;
         this.toString = function() {
-        return "[Locale = " + this.id + " Name = " + this.name + " Description = " + this.desc + "]";
+        return "[Locale = " + this.id + ", Name = " + this.name + ", Description = " + this.desc + "]";
         }
-    }    
+    }
     //globals using prototype:
         loc[0] = new Locale(0, 'Champagnat', 'You have arrived at the largest freshman dorm.');
         loc[1] = new Locale(1, 'Leo', 'You have arrived at the second largest freshman dorm.');
@@ -35,8 +36,14 @@
         loc[7] = new Locale(7, 'Highway', 'You have found yourself mistakenly walking onto a highway, where a mysterious train materialized right in front of you. You must go back or die.');
         loc[8] = new Locale(8, 'Hell', "The train runs over you, crushing ever bone in your body.\nDeath brings down his arms, forcing a scythe that tears through your body, ripping your soul from it.\n\nYou have obtained Death's Scythe!");
    
+        locItem[0] = new Locale(0, 'Campus Map', 'This Map may come in handy in the future!');
+        locItem[1] = new Locale(1, 'Fishing Rod', 'Not now, but I may fish in the future.');
+        locItem[2] = new Locale(2, 'Football', 'I miss throwing the old pigskin around..');
+        locItem[3] = new Locale(3, 'Weights', 'Do you even lift bro?');
+        locItem[4] = new Locale(4, 'The Scythe of Death', 'By greeting Death head on, you have forcefully obtained his Scythe.');
+      
 	function startDisplay(){ //declares values at creation of HTML page
-       // alert(loc[0].toString());
+        //alert(locItem[4].toString()); test for Locale
 		document.getElementById("input").value = "";
 		document.getElementById("pts").value = 0;
 		nav = 
@@ -66,6 +73,12 @@
 		iPtr.value = msg + "\n" + history; 
 		var iDet = document.getElementById("details");
 		iDet.value = msg2;
+        if(currentLocale == 8){
+            var invString = document.getElementById("invent");
+			var invDesString = document.getElementById("itemsDesBox");
+			invString.value = invString.value + '\n' + locItem[4].name + '\n';
+			invDesString.value = invDesString.value + '\n' + locItem[4].desc + '\n';
+		}
 	}
    
     function go(dir){
@@ -185,39 +198,29 @@
 			case ("g"):
 				var invString = document.getElementById("invent");
 				var invDesString = document.getElementById("itemsDesBox");
-				if(items[0]!='\nCampus Map' && currentLocale == 2){
+				if(locItem[0].name!='' && currentLocale == 2){
                     loc[currentLocale].desc = 'You step into the main building on campus.  Hmmm what campus is this?';
-					items[0] = '\nCampus Map'; //name
-					itemsDes[0] = '\nThis Map may come in handy in the future!'; //description
-					invString.value = invString.value + items[0] + "\n";
-					invDesString.value = invDesString.value + itemsDes[0] + "\n";
+					invString.value = invString.value + '\n' + locItem[0].name + '\n';
+					invDesString.value = invDesString.value + '\n' + locItem[0].desc + '\n';
+                    locItem[0].name='';
 				}
-				if(items[1]!='\nFishing Rod' && currentLocale == 3){
+				if(locItem[1].name!='' && currentLocale == 3){
                     loc[currentLocale].desc = 'You step into a large River.  It looks like the Hudson.. but the only way out is near Champagnat.';
-					items[1] = '\nFishing Rod'; //name
-					itemsDes[1] = '\nNot now, but I may fish in the future.'; //description
-					invString.value = invString.value + items[1] + "\n";
-					invDesString.value = invDesString.value + itemsDes[1] + "\n";
+					invString.value = invString.value + '\n' + locItem[1].name + '\n';
+					invDesString.value = invDesString.value + '\n' + locItem[1].desc + '\n';
+                    locItem[1].name='';
 				}
-				if(items[2]!='\nFootball' && currentLocale == 4){
+				if(locItem[2].name!='' && currentLocale == 4){
                     loc[currentLocale].desc = 'The sign says "Tenney Stadium."';
-					items[2] = '\nFootball'; //name
-					itemsDes[2] = '\nI miss throwing the old pigskin around..'; //description
-					invString.value = invString.value + items[2] + "\n";
-					invDesString.value = invDesString.value + itemsDes[2] + "\n";
+					invString.value = invString.value + '\n' + locItem[2].name + '\n';
+					invDesString.value = invDesString.value + '\n' + locItem[2].desc + '\n';
+                    locItem[2].name='';
 				}
-				if(items[3]!='\nWeights' && currentLocale == 5){
+				if(locItem[3].name!='' && currentLocale == 5){
                     loc[currentLocale].desc = 'You have arrived at the building for swimming, basketball, and workouts.';
-					items[3] = '\nWeights'; //name
-					itemsDes[3] = '\nDo you even lift bro?'; //description
-					invString.value = invString.value + items[3] + "\n";
-					invDesString.value = invDesString.value + itemsDes[3] + "\n";
-				}
-                if(items[4]!="Death's Scythe" && currentLocale == 8){
-					items[4] = "\nDeath's Scythe"; //name
-					itemsDes[4] = "\nBy greeting Death head on, you have forcefully obtained his Scythe."; //description
-					invString.value = invString.value + items[4] + "\n";
-					invDesString.value = invDesString.value + itemsDes[4] + "\n";
+					invString.value = invString.value + '\n' + locItem[3].name + "\n";
+					invDesString.value = invDesString.value + '\n' + locItem[3].desc + '\n';
+                    locItem[3].name='';
 				}
 			break;
 			default:
