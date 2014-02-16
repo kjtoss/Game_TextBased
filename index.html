@@ -29,7 +29,7 @@
         loc[1] = new Locale(1, 'Leo', 'You have arrived at the second largest freshman dorm.');
         loc[2] = new Locale(2, 'Student Center', 'You step into the main building on campus.  Hmmm what campus is this?\n\nYou have discovered a "Campus Map!" Would you like to grab it ("g")? \n[submit "i" in the console to view your inventory.]');
         loc[3] = new Locale(3, 'River', 'You step into a large River.  It looks like the Hudson.. but the only way out is near Champagnat.\n\nYou have discovered a "Fishing Rod!" Would you like to grab it ("g")? \n[submit "i" in the console to view your inventory.]');
-        loc[4] = new Locale(4, 'Football Field', 'The sign says "Tenney Stadium"\n\nYou have discovered a "Football!" Would you like to grab it ("g")? \n[submit "i" in the console to view your inventory.]');
+        loc[4] = new Locale(4, 'Football Field', 'The sign says "Tenney Stadium."\n\nYou have discovered a "Football!" Would you like to grab it ("g")? \n[submit "i" in the console to view your inventory.]');
         loc[5] = new Locale(5, 'McCann Center', 'You have arrived at the building for swimming, basketball, and workouts.\n\nYou have discovered "Weights!" Would you like to grab it ("g")? \n[submit "i" in the console to view your inventory.]');
         loc[6] = new Locale(6, 'Donnelly', 'What is this? A building with both science and fashion? Odd...');
         loc[7] = new Locale(7, 'Highway', 'You have found yourself mistakenly walking onto a highway, where a mysterious train materialized right in front of you. You must go back or die.');
@@ -186,24 +186,28 @@
 				var invString = document.getElementById("invent");
 				var invDesString = document.getElementById("itemsDesBox");
 				if(items[0]!='\nCampus Map' && currentLocale == 2){
+                    loc[currentLocale].desc = 'You step into the main building on campus.  Hmmm what campus is this?';
 					items[0] = '\nCampus Map'; //name
 					itemsDes[0] = '\nThis Map may come in handy in the future!'; //description
 					invString.value = invString.value + items[0] + "\n";
 					invDesString.value = invDesString.value + itemsDes[0] + "\n";
 				}
 				if(items[1]!='\nFishing Rod' && currentLocale == 3){
+                    loc[currentLocale].desc = 'You step into a large River.  It looks like the Hudson.. but the only way out is near Champagnat.';
 					items[1] = '\nFishing Rod'; //name
 					itemsDes[1] = '\nNot now, but I may fish in the future.'; //description
 					invString.value = invString.value + items[1] + "\n";
 					invDesString.value = invDesString.value + itemsDes[1] + "\n";
 				}
 				if(items[2]!='\nFootball' && currentLocale == 4){
+                    loc[currentLocale].desc = 'The sign says "Tenney Stadium."';
 					items[2] = '\nFootball'; //name
 					itemsDes[2] = '\nI miss throwing the old pigskin around..'; //description
 					invString.value = invString.value + items[2] + "\n";
 					invDesString.value = invDesString.value + itemsDes[2] + "\n";
 				}
 				if(items[3]!='\nWeights' && currentLocale == 5){
+                    loc[currentLocale].desc = 'You have arrived at the building for swimming, basketball, and workouts.';
 					items[3] = '\nWeights'; //name
 					itemsDes[3] = '\nDo you even lift bro?'; //description
 					invString.value = invString.value + items[3] + "\n";
