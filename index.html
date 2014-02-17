@@ -277,6 +277,15 @@
 				var iDet = document.getElementById("details");
 				iDet.value = msg2;
 			break;
+			case ("z"):
+                msg='You lay down and take a 2 hour nap..';
+                var iPtr = document.getElementById("loc");
+                var history = iPtr.value;
+                iPtr.value = msg + "\n" + history;
+				msg2="You are lost, started searching for your way only a few minutes ago, and already need a nap.  You may want to get that checked out.";
+				var iDet = document.getElementById("details");
+				iDet.value = msg2;
+			break;
 		}
 		document.getElementById("input").value = "";
 	}
@@ -349,6 +358,7 @@
   Type 'w' or 'west' to move south.
   Type 'i' for inventory.
   Type 'g' to grab an item.
+  Type 'z' to sleep.  Zzzzz.
   </textarea>
  </body>
 </html>
