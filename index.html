@@ -14,36 +14,37 @@
     var itemsDes = new Array();
     var itemsFound = 0;
     var inventVis = 0;
-    var loc = new Array();
-    var locItem = new Array();
-    
-    function Locale(id, name, desc){ //prototype for Location
+    var loc = new Array(); //Array of locations to plug prototype values into
+    var locItem = new Array(); //Array of items to plug prototype values into
+    //prototype for Location:
+    function Locale(id, LocalevsItem, name, desc){ 
         this.id = id;
         this.name = name;
         this.desc = desc;
         this.toString = function() {
-        return "[Locale = " + this.id + ", Name = " + this.name + ", Description = " + this.desc + "]";
+        return "["+LocalevsItem+" id = " + this.id + ", Name = " + this.name + ", Description = " + this.desc + "]";
         }
     }
-    //globals using prototype:
-        loc[0] = new Locale(0, 'Champagnat', 'You have arrived at the largest freshman dorm.');
-        loc[1] = new Locale(1, 'Leo', 'You have arrived at the second largest freshman dorm.');
-        loc[2] = new Locale(2, 'Student Center', 'You step into the main building on campus.  Hmmm what campus is this?\n\nYou have discovered a "Campus Map!" Would you like to grab it ("g")? \n[submit "i" in the console to view your inventory.]');
-        loc[3] = new Locale(3, 'River', 'You step into a large River.  It looks like the Hudson.. but the only way out is near Champagnat.\n\nYou have discovered a "Fishing Rod!" Would you like to grab it ("g")? \n[submit "i" in the console to view your inventory.]');
-        loc[4] = new Locale(4, 'Football Field', 'The sign says "Tenney Stadium."\n\nYou have discovered a "Football!" Would you like to grab it ("g")? \n[submit "i" in the console to view your inventory.]');
-        loc[5] = new Locale(5, 'McCann Center', 'You have arrived at the building for swimming, basketball, and workouts.\n\nYou have discovered "Weights!" Would you like to grab it ("g")? \n[submit "i" in the console to view your inventory.]');
-        loc[6] = new Locale(6, 'Donnelly', 'What is this? A building with both science and fashion? Odd...');
-        loc[7] = new Locale(7, 'Highway', 'You have found yourself mistakenly walking onto a highway, where a mysterious train materialized right in front of you. You must go back or die.');
-        loc[8] = new Locale(8, 'Hell', "The train runs over you, crushing ever bone in your body.\nDeath brings down his arms, forcing a scythe that tears through your body, ripping your soul from it.\n\nYou have obtained Death's Scythe!");
-   
-        locItem[0] = new Locale(0, 'Campus Map', 'This Map may come in handy in the future!');
-        locItem[1] = new Locale(1, 'Fishing Rod', 'Not now, but I may fish in the future.');
-        locItem[2] = new Locale(2, 'Football', 'I miss throwing the old pigskin around..');
-        locItem[3] = new Locale(3, 'Weights', 'Do you even lift bro?');
-        locItem[4] = new Locale(4, 'The Scythe of Death', 'By greeting Death head on, you have forcefully obtained his Scythe.');
+    //globals using prototype: (Locations first)
+    loc[0] = new Locale(0, 'Locale', 'Champagnat', 'You have arrived at the largest freshman dorm.');
+    loc[1] = new Locale(1, 'Locale', 'Leo', 'You have arrived at the second largest freshman dorm.');
+    loc[2] = new Locale(2, 'Locale', 'Student Center', 'You step into the main building on campus.  Hmmm what campus is this?\n\nYou have discovered a "Campus Map!" Would you like to grab it ("g")? \n[submit "i" in the console to view your inventory.]');
+    loc[3] = new Locale(3, 'Locale', 'River', 'You step into a large River.  It looks like the Hudson.. but the only way out is near Champagnat.\n\nYou have discovered a "Fishing Rod!" Would you like to grab it ("g")? \n[submit "i" in the console to view your inventory.]');
+    loc[4] = new Locale(4, 'Locale', 'Football Field', 'The sign says "Tenney Stadium."\n\nYou have discovered a "Football!" Would you like to grab it ("g")? \n[submit "i" in the console to view your inventory.]');
+    loc[5] = new Locale(5, 'Locale', 'McCann Center', 'You have arrived at the building for swimming, basketball, and workouts.\n\nYou have discovered "Weights!" Would you like to grab it ("g")? \n[submit "i" in the console to view your inventory.]');
+    loc[6] = new Locale(6, 'Locale', 'Donnelly', 'What is this? A building with both science and fashion? Odd...');
+    loc[7] = new Locale(7, 'Locale', 'Highway', 'You have found yourself mistakenly walking onto a highway, where a mysterious train materialized right in front of you. You must go back or die.');
+    loc[8] = new Locale(8, 'Locale', 'Hell', "The train runs over you, crushing ever bone in your body.\nDeath brings down his arms, forcing a scythe that tears through your body, ripping your soul from it.\n\nYou have obtained Death's Scythe!");
+    //Items next:
+    locItem[0] = new Locale(0, 'Item', 'Campus Map', 'This Map may come in handy in the future!');
+    locItem[1] = new Locale(1, 'Item', 'Fishing Rod', 'Not now, but I may fish in the future.');
+    locItem[2] = new Locale(2, 'Item', 'Football', 'I miss throwing the old pigskin around..');
+    locItem[3] = new Locale(3, 'Item', 'Weights', 'Do you even lift bro?');
+    locItem[4] = new Locale(4, 'Item', 'The Scythe of Death', 'By greeting Death head on, you have forcefully obtained his Scythe.');
       
 	function startDisplay(){ //declares values at creation of HTML page
-        //alert(locItem[4].toString()); test for Locale
+        //alert(loc[4].toString()); //test for Locale function
+        //alert(locItem[4].toString()); //test for Item in Locale Function
 		document.getElementById("input").value = "";
 		document.getElementById("pts").value = 0;
 		nav = 
@@ -81,7 +82,7 @@
 		}
 	}
    
-    function go(dir){
+    function go(dir){//called when direction is given, where dir is the direction
 		before = currentLocale;
 		switch(dir){
 			case('north'):
@@ -121,7 +122,7 @@
 		updateDisplay();
     }
    
-	function inventory(){
+	function inventory(){ //called when 'i' is submitted.  displays/ hides inventory based on what it previously was
 		var inv = document.getElementById("invent");
 		if(inv.className=='hide')
 		{
@@ -143,7 +144,7 @@
 	}
    
   
-	function con(){
+	function con(){ //function for the console input
 		var console = document.getElementById("input");
 		switch(console.value.toLowerCase()){ //NOT case sensitive
 			case ("h"):
@@ -283,7 +284,6 @@
     </script>
  </head>
  
- 
  <body onload="startDisplay();" bgcolor="#00aa11">
   <h1><font color = "#402010"><b>The Lost Adventurer</b></font></h1>
   <h3>You woke up this morning to find yourself in a land you have never been before.  Where would you like to travel? Remember, the more you travel, the more experience you get!</h3>
@@ -291,6 +291,7 @@
   </textarea>
   <textarea id="details" style="width:450px; height:100px; background:#604020; border-color:#51dd51; color:#ffffff;" readonly = "readyonly">
   </textarea>
+  <img src="Game Map.png" alt="Map" height="340" width="750">
   <br>
   <br>
   <input  type = "text" 
