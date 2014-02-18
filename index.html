@@ -16,6 +16,7 @@
     var inventVis = 0;
     var loc = new Array(); //Array of locations to plug prototype values into
     var locItem = new Array(); //Array of items to plug prototype values into
+    var isItShowing = 0;
     //prototype for Location:
     function Locale(id, LocalevsItem, name, desc){ 
         this.id = id;
@@ -124,22 +125,20 @@
    
 	function inventory(){ //called when 'i' is submitted.  displays/ hides inventory based on what it previously was
 		var inv = document.getElementById("invent");
-		if(inv.className=='hide')
+		if(isItShowing==0)
 		{
 			inv.style.display = "inline";
-			inv.className ='show';
 		}else{
 			inv.style.display = "none";
-			inv.className ='hide';
 		}
 		var invD = document.getElementById("itemsDesBox");
-		if(invD.className=='hide')
+		if(isItShowing==0)
 		{
 			invD.style.display = "inline";
-			invD.className ='show';
+            isItShowing=1; //Change after both are displaying or hiding
 		}else{
 			invD.style.display = "none";
-			invD.className ='hide';
+            isItShowing=0; //Change after both are displaying or hiding
 		}
 	}
    
@@ -341,10 +340,10 @@
   <br>
   <br>
   <br>
-  <textarea id="invent" style="width:120px; height:400px; background:#604020; border-color:#51dd51; color:#ffffff; display:none" class="hide" readonly = "readyonly">
+  <textarea id="invent" style="width:120px; height:400px; background:#604020; border-color:#51dd51; color:#ffffff; display:none" readonly = "readyonly">
   Inventory:
   </textarea>
-  <textarea id="itemsDesBox" style="width:400px; height:400px; background:#604020; border-color:#51dd51; color:#ffffff; display:none" class="hide" readonly = "readyonly">
+  <textarea id="itemsDesBox" style="width:400px; height:400px; background:#604020; border-color:#51dd51; color:#ffffff; display:none" readonly = "readyonly">
   Description:
   </textarea>
   <textarea id="help" style="width:400px; height:200px; background:#604020; border-color:#51dd51; color:#ffffff; display:block" class="show" readonly = "readyonly">
